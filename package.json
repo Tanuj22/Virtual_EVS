@@ -1,0 +1,34 @@
+{
+  "name": "virtual-evs",
+  "version": "1.0.0",
+  "description": "Election is backbone of Democracy therefore it should be secure and hassle free process.</br>\r To make it hassle free and easily accessible we proposed to make it a online process using Blockchain Technology. Blockchain can provide the solutions for the problems we might face if we start using online voting system</br>",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "dev": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tanuj22/Virtual_EVS.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tanuj22/Virtual_EVS/issues"
+  },
+  "homepage": "https://github.com/Tanuj22/Virtual_EVS#readme",
+  "dependencies": {
+    "fs-extra": "^8.1.0",
+    "ganache-cli": "^6.5.1",
+    "mocha": "^6.2.0",
+    "next": "^9.0.3",
+    "next-routes": "^1.4.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.87.3",
+    "solc": "^0.4.17",
+    "truffle-hdwallet-provider": "0.0.3",
+    "web3": "^1.0.0-beta.37"
+  }
+}
