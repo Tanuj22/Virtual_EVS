@@ -17,7 +17,7 @@ export default () =>{
                 <Link route="/">
                     <a className="item">Vote</a>
                 </Link>
-                <Link route="/">
+                <Link route="/admin">
                     <a className="item">Admin Panel</a>
                 </Link>
             </Menu.Menu>
