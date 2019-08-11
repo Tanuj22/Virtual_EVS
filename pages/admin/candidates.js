@@ -1,30 +1,30 @@
 import React, {Component} from 'react';
 import Layout from '../../components/Layout';
-import { Button, Table } from 'semantic-ui-react'
+import { Button,Table } from 'semantic-ui-react'
 import voting from '../../ethereum/voting';
 import web3 from '../../ethereum/web3';
-import { Router, Link } from '../../routes.js';
-import RequestRow from '../../components/requestVoterRow'; 
+import { Router,Link } from '../../routes.js';
+import RequestRow from '../../components/requestCandidateRow'; 
 
 
 class VoterAdmin extends Component{
     static async getInitialProps(){
-        const accounts = await web3.eth.getAccounts();
-        const hasAccess = await voting.methods.isManager().send({
-            from : accounts[0]
-        });
-        if(!hasAccess)
-        {
-            Router.push('/admin');
-        }
-        else{
-            const registeredVoters = await voting.methods.getVoters().call();
-            return {registeredVoters};
-         }
+        // const accounts = await web3.eth.getAccounts();
+        // const hasAccess = await voting.methods.isManager().send({
+        //     from : accounts[0]
+        // });
+        // if(!hasAccess)
+        // {
+        //     Router.push('/admin');
+        // }
+        // else{
+            const registeredCandidates = await voting.methods.getCandidates().call();
+            return {registeredCandidates};
+        // }
     }
 
-    VotersList(){
-        return this.props.registeredVoters.map((address,index) =>{
+    CandidateList(){
+        return this.props.registeredCandidates.map((address,index) =>{
             return <RequestRow
                 key={index}
                 address = {address} 
@@ -35,8 +35,8 @@ class VoterAdmin extends Component{
     render(){
         return(
             <Layout>
-                <Link route = '/admin/candidates'>
-                    <Button>Show Candidates</Button>
+                <Link route = '/admin/voters'>
+                    <Button>Show Voters</Button>
                 </Link>
                 <Table singleLine>
                 <Table.Header>
@@ -48,7 +48,7 @@ class VoterAdmin extends Component{
                     </Table.Row>
                 </Table.Header>
                 <Table.Body>
-                    {this.VotersList()}
+                    {this.CandidateList()}
                 </Table.Body>
                 </Table>
             </Layout>
