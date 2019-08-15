@@ -40,11 +40,9 @@ class VoterDetails extends Component{
                         {this.props.voter.constituency}
                     </Grid.Column>
                     <Grid.Column>
-                        {this.props.voter.hasVoted ? null : (
                             <Link route = '/vote/candidateslist'>
-                                <Button >Vote</Button>
+                                <Button >Vote Now</Button>
                             </Link>
-                        )}
                     </Grid.Column>
                     </Grid.Row>
                 </Grid>

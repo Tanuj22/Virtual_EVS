@@ -7,7 +7,13 @@ import { Router, Link } from '../../routes';
 import CandidateCard from '../../components/candidateCard';
 
 class CandidateList extends Component{
-    static async getInitialProps(){
+    state = {
+        approvedCandidates : [],
+        voter : {}
+    }
+    async componentWillMount(){
+        //let approvedCandidates = [];
+        let candidates = [];
         const accounts = await web3.eth.getAccounts();
         const voter = await voting.methods.voterDetails(accounts[0]).call();
         if(!voter.aadhar && !voter.isVerified)
@@ -15,37 +21,53 @@ class CandidateList extends Component{
             Router.push('/register/voter');
         }
         else
-        {   let candidates = [];
+        {   
             candidates = await voting.methods.getCandidates().call();
-            let approvedCandidates = [];
-            candidates.forEach( async (address) => {
-                let candidate =  await voting.methods.candidateDetails(address).call();
+            candidates.forEach(async(address) => {
+                let candidate = await voting.methods.candidateDetails(address).call();
                 if(candidate.constituency === voter.constituency){
                     let candidatedetail = {
-                                            candidate : candidate,
-                                            address : address
-                                        }
-                    approvedCandidates.push(candidatedetail);
+                        candidate : candidate,
+                        address : address
+                    }
+                    this.setState(prevState => ({
+                        approvedCandidates: [...prevState.approvedCandidates, candidatedetail]
+                   }));
+                   this.setState({voter : voter})
                 }
             });
-            return { approvedCandidates };
         }
     }
 
     Candidates(){
-        return this.props.approvedCandidates.map((candidatedetail,index)=>{
+        return this.state.approvedCandidates.map((candidatedetail,index)=>{
             return (
                 <CandidateCard
                     key={index}
                     candidate = {candidatedetail.candidate}
                     address = {candidatedetail.address}
-                    
+                    voterHasVoted = {this.state.voter.hasVoted}
                 />
             )
         });
     }
 
     render(){
+        // voting.methods.getCandidates().call().then(candidates =>{
+        //     candidates.forEach(address =>{
+        //         voting.methods.candidateDetails(address).call().then(candidate=>{
+        //             if(candidate.constituency === this.props.voter.constituency){
+        //                 let candidatedetail = {
+        //                     candidate : candidate,
+        //                     address : address
+        //                 }
+        //                 this.setState(prevState => ({
+        //                     approvedCandidates: [...prevState.approvedCandidates, candidatedetail]
+        //                   }))
+        //             }
+        //         })
+        //     })
+        // })
         return(
             <Layout>
             <Card.Group>
