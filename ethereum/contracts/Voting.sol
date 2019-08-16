@@ -21,8 +21,17 @@ contract Voting{
         bool isVerified;
         uint totalVotes;
     }
+    
+    struct AdminCandidate{
+        string attendance;
+        string criminalRecord;
+        string fundUtilization;
+        string otherDetails;
+    }
+    
     address[] public candidates;
     mapping(address => Candidate) public candidateDetails;
+    mapping(address => AdminCandidate) public adminCandidateDetails;
     
     modifier restricted() {
         require(msg.sender == manager);
@@ -85,6 +94,23 @@ contract Voting{
         
         voterDetails[msg.sender].hasVoted = true;
         
+    }
+    
+    function addCandidateDetails(
+        address candidateAddress, 
+        string attendance , 
+        string criminalRecord, 
+        string fundUtilization,
+        string otherDetails) public 
+        restricted {
+        AdminCandidate memory newAdminCandidate = AdminCandidate({
+            attendance : attendance,
+            criminalRecord : criminalRecord,
+            fundUtilization : fundUtilization,
+            otherDetails : otherDetails
+        });
+        
+        adminCandidateDetails[candidateAddress] = newAdminCandidate;
     }
     
     function getVoters() public view returns (address[])

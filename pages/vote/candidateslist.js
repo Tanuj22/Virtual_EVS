@@ -25,7 +25,7 @@ class CandidateList extends Component{
             candidates = await voting.methods.getCandidates().call();
             candidates.forEach(async(address) => {
                 let candidate = await voting.methods.candidateDetails(address).call();
-                if(candidate.constituency === voter.constituency && candidate.isVerified){
+                if((candidate.constituency === voter.constituency) && candidate.isVerified){
                     let candidatedetail = {
                         candidate : candidate,
                         address : address
