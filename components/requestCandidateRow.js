@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Table, Button } from 'semantic-ui-react';
 import voting from '../ethereum/voting';
 import web3 from '../ethereum/web3';
+import { Link } from '../routes';
 
 class RequestRow extends Component{
 
@@ -25,7 +26,9 @@ class RequestRow extends Component{
         });
         return(
             <Table.Row disabled= {this.state.candidate.isVerified}>
-                <Table.Cell>{this.state.candidate.name}</Table.Cell>
+                <Link route = {`/admin/candidates/${this.props.address}`}>
+                    <Table.Cell><div style = {{cursor : 'pointer'}}>{this.state.candidate.name}</div></Table.Cell>
+                </Link> 
                 <Table.Cell>{this.state.candidate.aadhar}</Table.Cell>
                 <Table.Cell>{this.state.candidate.constituency}</Table.Cell>
                 <Table.Cell>
