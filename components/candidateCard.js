@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Card, Button } from 'semantic-ui-react';
 import web3 from '../ethereum/web3';
 import voting from '../ethereum/voting';
-import { Router } from '../routes'
+import { Router , Link} from '../routes'
 
 class CandidateCard extends Component{
 
@@ -39,6 +39,9 @@ class CandidateCard extends Component{
                     { !!this.props.voterHasVoted ? null : (
                         <Button onClick = {this.onVote} loading= { this.state.loading }>Vote</Button>
                     )}
+                    <Link route = {`/vote/candidateslist/${this.props.address}`}>
+                        <Button>More Details</Button>
+                    </Link>
                 </Card.Content>
             </Card>
         );

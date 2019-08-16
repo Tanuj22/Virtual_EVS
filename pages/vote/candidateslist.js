@@ -53,21 +53,6 @@ class CandidateList extends Component{
     }
 
     render(){
-        // voting.methods.getCandidates().call().then(candidates =>{
-        //     candidates.forEach(address =>{
-        //         voting.methods.candidateDetails(address).call().then(candidate=>{
-        //             if(candidate.constituency === this.props.voter.constituency){
-        //                 let candidatedetail = {
-        //                     candidate : candidate,
-        //                     address : address
-        //                 }
-        //                 this.setState(prevState => ({
-        //                     approvedCandidates: [...prevState.approvedCandidates, candidatedetail]
-        //                   }))
-        //             }
-        //         })
-        //     })
-        // })
         return(
             <Layout>
             <Card.Group>

@@ -9,7 +9,7 @@ class VoterDetails extends Component{
     static async getInitialProps(){
         const accounts = await web3.eth.getAccounts();
         const voter = await voting.methods.voterDetails(accounts[0]).call();
-        if(!voter.aadhar && !voter.isVerified)
+        if(!voter.aadhar || !voter.isVerified)
         {
             Router.push('/register/voter');
         }
