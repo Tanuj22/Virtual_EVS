@@ -42,6 +42,14 @@ contract Voting{
         manager=msg.sender;
     }
     
+    function CompareStrings(string memory a, string memory b) internal pure returns (bool) {
+        if(bytes(a).length != bytes(b).length) {
+            return false;
+        } else {
+            return keccak256(a) == keccak256(b);
+        }
+    }
+    
     function registerVoter(string name, string aadhar, string constituency) public{
         Voter memory newVoter = Voter({
             name : name,
@@ -50,6 +58,8 @@ contract Voting{
             isVerified : false,
             hasVoted : false
         });
+        
+        require(!CompareStrings(voterDetails[msg.sender].aadhar, newVoter.aadhar));
         
         voterDetails[msg.sender] = newVoter;
         voters.push(msg.sender);
@@ -64,6 +74,8 @@ contract Voting{
             totalVotes : 0
         });
         
+        require(!CompareStrings(candidateDetails[msg.sender].aadhar, newCandidate.aadhar));
+        
         candidateDetails[msg.sender] = newCandidate;
         candidates.push(msg.sender);
     }
@@ -76,13 +88,6 @@ contract Voting{
         candidateDetails[candidateAddress].isVerified = true;
     }
     
-    function CompareStrings(string memory a, string memory b) internal pure returns (bool) {
-        if(bytes(a).length != bytes(b).length) {
-            return false;
-        } else {
-            return keccak256(a) == keccak256(b);
-        }
-    }
     
     function vote(address candidateAddress) public {
         require(voterDetails[msg.sender].isVerified);
