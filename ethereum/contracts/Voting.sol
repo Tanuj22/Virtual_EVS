@@ -5,6 +5,7 @@ contract Voting{
     address manager;
     bool startVote;
     bool endVote;
+    mapping(string => address) winner;
     struct Voter{
         string name;
         string aadhar;
@@ -34,7 +35,6 @@ contract Voting{
     mapping(address => Candidate) public candidateDetails;
     mapping(address => AdminCandidate) public adminCandidateDetails;
     mapping(address => uint) totalVotes;
-    address public winner;
     
     modifier restricted() {
         require(msg.sender == manager);
@@ -45,6 +45,7 @@ contract Voting{
         manager=msg.sender;
         startVote = false;
         endVote = false;
+        
     }
     
     function CompareStrings(string memory a, string memory b) internal pure returns (bool) {
@@ -110,17 +111,19 @@ contract Voting{
         
     }
     
-    function showResult(string c) public {
+    function calculateResult(string c) public restricted{
         require(endVote);
         uint votes =0;
+        address temp;
         for(uint i =0 ; i<candidates.length;i++){
             if(CompareStrings(candidateDetails[candidates[i]].constituency,c)){
                 if(totalVotes[candidates[i]]>votes){
-                    winner = candidates[i];
+                    temp = candidates[i];
                     votes = totalVotes[candidates[i]];
                 }
             }
         }
+        winner[c]=temp;
     }
     
     function startElection() public restricted{
@@ -157,6 +160,11 @@ contract Voting{
     function getCandidates() public view returns (address[])
     {
         return candidates;
+    }
+    
+    function showWinner(string c) public view returns (address){
+        require(endVote);
+        return winner[c];
     }
     
     function isManager() public view returns (bool){
