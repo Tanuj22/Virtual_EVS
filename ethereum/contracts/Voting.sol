@@ -3,6 +3,8 @@ pragma solidity ^0.4.17;
 
 contract Voting{
     address manager;
+    bool startVote;
+    bool endVote;
     struct Voter{
         string name;
         string aadhar;
@@ -19,7 +21,6 @@ contract Voting{
         string aadhar;
         string constituency;
         bool isVerified;
-        uint totalVotes;
     }
     
     struct AdminCandidate{
@@ -32,6 +33,8 @@ contract Voting{
     address[] public candidates;
     mapping(address => Candidate) public candidateDetails;
     mapping(address => AdminCandidate) public adminCandidateDetails;
+    mapping(address => uint) totalVotes;
+    address public winner;
     
     modifier restricted() {
         require(msg.sender == manager);
@@ -40,6 +43,8 @@ contract Voting{
     
     function Voting() public {
         manager=msg.sender;
+        startVote = false;
+        endVote = false;
     }
     
     function CompareStrings(string memory a, string memory b) internal pure returns (bool) {
@@ -51,6 +56,8 @@ contract Voting{
     }
     
     function registerVoter(string name, string aadhar, string constituency) public{
+        require(!startVote);
+        require(!endVote);
         Voter memory newVoter = Voter({
             name : name,
             aadhar : aadhar,
@@ -60,22 +67,22 @@ contract Voting{
         });
         
         require(!CompareStrings(voterDetails[msg.sender].aadhar, newVoter.aadhar));
-        
         voterDetails[msg.sender] = newVoter;
         voters.push(msg.sender);
     }
     
     function registerCandidate(string name, string aadhar, string constituency) public{
+        require(!startVote);
+        require(!endVote);
         Candidate memory newCandidate = Candidate({
             name : name,
             aadhar : aadhar,
             constituency : constituency,
-            isVerified : false,
-            totalVotes : 0
+            isVerified : false
         });
         
         require(!CompareStrings(candidateDetails[msg.sender].aadhar, newCandidate.aadhar));
-        
+        totalVotes[msg.sender]=0;
         candidateDetails[msg.sender] = newCandidate;
         candidates.push(msg.sender);
     }
@@ -90,16 +97,40 @@ contract Voting{
     
     
     function vote(address candidateAddress) public {
+        require(startVote);
+        require(!endVote);
         require(voterDetails[msg.sender].isVerified);
         require(!voterDetails[msg.sender].hasVoted);
         
         require(CompareStrings(voterDetails[msg.sender].constituency , candidateDetails[candidateAddress].constituency));
         
-        candidateDetails[candidateAddress].totalVotes++;
+        totalVotes[candidateAddress]++;
         
         voterDetails[msg.sender].hasVoted = true;
         
     }
+    
+    function showResult(string c) public {
+        require(endVote);
+        uint votes =0;
+        for(uint i =0 ; i<candidates.length;i++){
+            if(CompareStrings(candidateDetails[candidates[i]].constituency,c)){
+                if(totalVotes[candidates[i]]>votes){
+                    winner = candidates[i];
+                    votes = totalVotes[candidates[i]];
+                }
+            }
+        }
+    }
+    
+    function startElection() public restricted{
+        startVote = true;
+    }
+    
+    function endElection() public restricted{
+        endVote = true;
+    }
+    
     
     function addCandidateDetails(
         address candidateAddress, 
