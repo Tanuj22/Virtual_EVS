@@ -3,7 +3,8 @@ const Web3 = require('web3');
 const compiledVoting  = require('./build/Voting.json');
 const provider = new HDWalletProvider(
     'gown phrase drill pull acoustic unhappy sting find hub anger they token',
-    'https://rinkeby.infura.io/v3/a5c338385e544976ab30b55fe1377ee2',
+    'https://raghavranjan.blockchain.azure.com:3200/JgxhTVXfJq9IGUNPNc94qrXT'
+    //'https://rinkeby.infura.io/v3/a5c338385e544976ab30b55fe1377ee2',
     //'https://tanujagarwal.blockchain.azure.com:3200/kJ6kVRUTqAEs6eM7zWgLa53t'
     
 );
