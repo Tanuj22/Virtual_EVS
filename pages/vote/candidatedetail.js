@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Layout from '../../components/Layout';
 import { Grid , Button } from 'semantic-ui-react'
 import voting from '../../ethereum/voting';
+import web3 from '../../ethereum/web3';
 import { Router } from '../../routes.js';
 
 class CandidateDetail extends Component{
@@ -9,7 +10,10 @@ class CandidateDetail extends Component{
         const {address} = props.query;
         const details = await voting.methods.candidateDetails(address).call();
         const adminDetails = await voting.methods.adminCandidateDetails(address).call();
-        return{address,details,adminDetails};
+        const accounts = await web3.eth.getAccounts();
+        const voter = await voting.methods.voterDetails(accounts[0]).call();
+        const voterHasVoted = voter.hasVoted;
+        return{voterHasVoted,address,details,adminDetails};
     }
 
     state = {
@@ -24,7 +28,7 @@ class CandidateDetail extends Component{
             await voting.methods.vote(this.props.address).send({
                 from : accounts[0]
             })
-            Router.push('/');
+            Router.pushRoute('/');
         }catch(err){
             this.setState({ errorMessage : err.message });
         }

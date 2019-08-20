@@ -11,7 +11,7 @@ class VoterDetails extends Component{
         const voter = await voting.methods.voterDetails(accounts[0]).call();
         if(!voter.aadhar || !voter.isVerified)
         {
-            Router.push('/register/voter');
+            Router.pushRoute('/register/voter');
         }
         else
         {

@@ -3,8 +3,8 @@ pragma solidity ^0.4.17;
 
 contract Voting{
     address manager;
-    bool startVote;
-    bool endVote;
+    bool public startVote;
+    bool public endVote;
     mapping(string => address) winner;
     struct Voter{
         string name;
@@ -130,7 +130,7 @@ contract Voting{
         startVote = true;
     }
     
-    function endElection() public restricted{
+        function endElection() public restricted{
         endVote = true;
     }
     
@@ -165,6 +165,11 @@ contract Voting{
     function showWinner(string c) public view returns (address){
         require(endVote);
         return winner[c];
+    }
+    
+    function winnerVotes(address candidate) public view returns(uint){
+        require(endVote);
+        return totalVotes[candidate];
     }
     
     function isManager() public view returns (bool){

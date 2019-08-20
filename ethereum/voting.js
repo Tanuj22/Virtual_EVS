@@ -3,7 +3,7 @@ import Voting from './build/Voting.json';
 
 const instance = new web3.eth.Contract(
     JSON.parse(Voting.interface),
-    '0xDbEA950e2C634bC775a1c43D325E17666c0d40e0'
+    '0xb087B019BEA743f25f3d86a0ED1078c1478e9914'
 );
 
 export default instance;
