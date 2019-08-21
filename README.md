@@ -5,7 +5,7 @@ To make it hassle free and easily accessible we proposed to make it a online pro
 ## Our proposed Solution
 
 
-We will register a Voter with the information of this aashar card and store the address of the account used to do so. We will also provide a platform where candidates can register for the election which will be verified by a third party like National Election Commission of India.</br>
+We will register a Voter with the information of this aadhar card and store the address of the account used to do so. We will also provide a platform where candidates can register for the election which will be verified by a third party like National Election Commission of India.</br>
 It is completely Blockchain based online voting system so that a person can cast vote from anywhwere securely.</br>
 On day of Election a person can login to the page using the registered address. After verification user will be redirected to vote casting page where a list of candidates in his constituency will appear and he can cast his vote. Once a person casted his vote cannot cast it again for that election so that there will be no Fake Voting.</br>
 On the day of Election Result will be tallied.</br>

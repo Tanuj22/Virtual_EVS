@@ -13,7 +13,7 @@ class VotingIndex extends Component{
     render(){
         return(
             <Layout>
-                <center><h1 style={{paddingTop :'25px'}}>Voting in the strength of our Decocracy</h1>
+                <center><h1 style={{paddingTop :'25px'}}>Democracy is the Strength of this Country</h1>
                 <div style  = {{paddingTop : '40px'}}>
                 { !this.props.start ? (<Link route ='/register'><Button size = "massive">Register</Button></Link>) : (!this.props.end ? (<Link route ='/vote/details'><Button size = "massive">Vote Now</Button></Link>):(<Link route ='/results'><Button size = "massive">Results</Button></Link>))}
                 </div>
