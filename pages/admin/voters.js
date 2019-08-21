@@ -10,7 +10,9 @@ import RequestRow from '../../components/requestVoterRow';
 class VoterAdmin extends Component{
     static async getInitialProps(){
         const registeredVoters = await voting.methods.getVoters().call();
-        return {registeredVoters};
+        const start = await voting.methods.startVote().call();
+        const end = await voting.methods.endVote().call();
+        return {registeredVoters,start,end};
     }
 
     state = {
@@ -51,11 +53,13 @@ class VoterAdmin extends Component{
                 <Link route = '/admin/candidates'>
                     <Button>Show Candidates</Button>
                 </Link>
-                <Button onClick= {this.startElecton} loading= { this.state.loading }>Start Election</Button>
-                <Button onClick= {this.stopElection} loading= { this.state.loading2 }>End Election</Button>
-                <Link route = '/admin/calculateresult'>
-                    <Button>Calculate Result</Button>
-                </Link>
+                {!this.props.start ? (<Button onClick= {this.startElecton} loading= { this.state.loading }>Start Election</Button>):(
+                    !this.props.end ? (<Button onClick= {this.stopElection} loading= { this.state.loading2 }>End Election</Button>) :(
+                        <Link route = '/admin/calculateresult'>
+                            <Button>Calculate Result</Button>
+                        </Link>
+                    )
+                )}
                 <Table singleLine>
                 <Table.Header>
                     <Table.Row>

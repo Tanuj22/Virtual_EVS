@@ -10,16 +10,6 @@ export default () =>{
             </Link>
 
             <Menu.Menu position = "right">
-                <Link route="/register">
-                    <a className="item">Register</a>
-                </Link>
-
-                <Link route="/vote/details">
-                    <a className="item">Vote</a>
-                </Link>
-                <Link route="/results">
-                    <a className="item">Results</a>
-                </Link>
                 <Link route="/admin">
                     <a className="item">Admin Panel</a>
                 </Link>

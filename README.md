@@ -11,5 +11,10 @@ On day of Election a person can login to the page using issued e voter Id and us
 On the day of Election Result will be automatically tallied.</br>
 This entire web application will be secured by Azure Blockchain service.</br>
 
+## Technologies Used
+1.Azure Blockchain Service</br>
+2.Metamask</br>
+3.Web3</br>
+4.ReactJS</br>
 
 
